@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "ppm-periodic-inspection",
+    "slug": "ppm-periodic-inspection",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "ppm-periodic-inspection"
+}
