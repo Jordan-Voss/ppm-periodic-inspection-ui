@@ -1,50 +1,39 @@
 import React from 'react'
 import { CheckBox, Button, TextInput, StyleSheet, Text, View } from 'react-native'
 import { logout } from '../Services/auth_service';
+import {Picker} from '@react-native-picker/picker';
+import Icon from 'react-native-vector-icons/Feather';
 
 const initialState = {
   username: "",
   password: "",
   isSelected: false,
-  countries: ["Egypt", "Canada", "Australia", "Ireland"]
-
+  categoryValue:"",
+  reasonValue:"",
 };
 
 export default class Home extends React.Component {
   state = initialState;
-  this.setValue = this.setValue.bind(this);
-}
-
-setOpen(open) {
-  this.setState({
-    open
-  });
-}
-
-setValue(callback) {
-  this.setState(state => ({
-    value: callback(state.value)
-  }));
-}
-
-setItems(callback) {
-  this.setState(state => ({
-    items: callback(state.items)
-  }));
-}
 
   onUsernameChange = username => {
     this.setState({ username });
 };
 
-setSelection = isSelected => {
-  this.setState({ isSelected });
-};
+  setSelection = isSelected => {
+    this.setState({ isSelected });
+  };
+
   handleLogout = async () => {
     await logout();
     this.props.navigation.navigate('Auth')    
   };
   render() {
+    const txtInput = (
+      <View>
+      <TextInput style={styles.TextInput}></TextInput>
+      </View>
+    );
+
   return (
     <View style={styles.container}>
       <Text>Home</Text>
@@ -157,30 +146,43 @@ setSelection = isSelected => {
       </View>
       <View style={styles.inputView}>
         <Text>Occupant in Attendance?</Text>
-      <CheckBox
-          value={this.state.isSelected}
-          onValueChange={this.setSelection.bind(this)}
-          style={styles.checkbox}
-        />
+        <CheckBox
+                  value={this.state.isSelected}
+                  onValueChange={this.setSelection.bind(this)}></CheckBox>
       </View>
-      <View style={styles.inputView}>
-      <Text>Installation Category</Text>
-
-      </View>
-      <View style={styles.inputView}>
-          <TextInput
-              style={styles.TextInput}
-              placeholder="PR Number"
-              placeholderTextColor="grey"
-              value={this.state.username}
-              maxLength={256}
-              color="#cd077d"
-              onChangeText={this.onUsernameChange}
-              
-              autoCapitalize="none"
-              autoCorrect={false}
-          />
-      </View>
+      <View style={styles.container}>
+        <Text>Installation Category</Text>
+      <Picker
+  selectedValue={this.state.categoryValue}
+  onValueChange={
+    (itemValue) =>
+    this.setState({categoryValue: itemValue})
+    // console.log(this.state.value)
+  }>
+  <Picker.Item label="Domestic" value="domestic" />
+  <Picker.Item label="Commercial" value="commercial" />
+  <Picker.Item label="Industrial" value="industrial" />
+  <Picker.Item label="Other (Please Specify)" value="other"/>
+</Picker>
+{this.state.categoryValue === 'other' ? txtInput : console.log(this.state)}
+        </View>
+        <View>
+        <View style={styles.container}>
+        <Text>Reason For Inspection</Text>
+      <Picker
+  selectedValue={this.state.reasonValue}
+  onValueChange={
+    (itemValue) =>
+    this.setState({reasonValue: itemValue})
+    // console.log(this.state.value)
+  }>
+  <Picker.Item label="Insurance Inspection" value="insurance-inspection" />
+  <Picker.Item label="Safety Audit" value="safety-audit" />
+  <Picker.Item label="Other (Please Specify)" value="other"/>
+</Picker>
+{this.state.reasonValue === 'other' ? txtInput : console.log(this.state)}
+        </View>
+        </View>
     </View>
   )
 }
@@ -296,5 +298,35 @@ const styles = StyleSheet.create({
   },
   loginText: {
       color: "#FEF2F2",
+  },
+  container2: {
+    marginHorizontal: 20,
+    marginBottom: 22.5,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    flexDirection: 'row',
+    zIndex: 10,
+
+    //
+    marginTop: 150,
+    flex: 1,
+  },
+  containerStyles: {
+    minHeight: 50,
+    minWidth: 149,
+    // borderColor: '#6F8C95',
+    // borderRadius: 6,
+  },
+  dropDownStyles: {
+    backgroundColor: '#fff',
+  },
+  labelStyles: {
+    color: '#6F8C95',
+    fontSize: 14,
+    textAlign: 'left',
+  },
+  itemStyles: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
   },
 });
