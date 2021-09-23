@@ -1,26 +1,127 @@
 import React from 'react'
-import { CheckBox, Button, TextInput, StyleSheet, Text, View } from 'react-native'
-import { logout } from '../Services/auth_service';
+import { CheckBox, Button, TextInput, Text, TouchableOpacity, View } from 'react-native'
+import { logout, saveReport } from '../Services/auth_service';
 import {Picker} from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/Feather';
+import { styles } from '../Styles/styles';
 
 const initialState = {
-  username: "",
-  password: "",
-  isSelected: false,
+  prNumber: null,
+  contractorName: "",
+  contractorAddress:"",
+  contractorRegNumber: null,
+  installationAge: '',
+  occupantName:"",
+  occupantAddress: "",
+  occupantInAttendance: false,
+  installationCategory: '',
+  installationCategoryComment: '',
+  inspectionReason: '',
+  inspectionReasonComment: '',
+  isFullExtent: false,
+  earthingType:"",
   categoryValue:"",
   reasonValue:"",
 };
 
 export default class Home extends React.Component {
   state = initialState;
+  handleSaveReport = async () => {
+    const {
+    prNumber,
+    contractorName, contractorAddress,
+    contractorRegNumber,
+    installationAge,
+    occupantName,
+    occupantAddress,
+    occupantInAttendance,
+    installationCategory,
+    installationCategoryComment,
+    inspectionReason,
+    inspectionReasonComment,
+    isFullExtent,
+    earthingType 
+  } = this.state;
+    console.log(prNumber,
+      contractorName, contractorAddress,
+      contractorRegNumber,
+      installationAge,
+      occupantName,
+      occupantAddress,
+      occupantInAttendance,
+      installationCategory,
+      installationCategoryComment,
+      inspectionReason,
+      inspectionReasonComment,
+      isFullExtent,
+      earthingType);
+    const respon = await saveReport(prNumber,
+      contractorName, contractorAddress,
+      contractorRegNumber,
+      installationAge,
+      occupantName,
+      occupantAddress,
+      occupantInAttendance,
+      installationCategory,
+      installationCategoryComment,
+      inspectionReason,
+      inspectionReasonComment,
+      isFullExtent,
+      earthingType);
+    const msg = respon.data;
+    console.log(msg);
 
-  onUsernameChange = username => {
-    this.setState({ username });
 };
 
-  setSelection = isSelected => {
-    this.setState({ isSelected });
+
+  onPrNumberChange = prNumber => {
+    this.setState({ prNumber });
+};
+
+  onContractorNameChange = contractorName => {
+    this.setState({ contractorName });
+  };
+
+  onContractorAddressChange = contractorAddress => {
+    this.setState({ contractorAddress });
+  };
+
+  onContractorRegNumberChange = contractorRegNumber => {
+    this.setState({ contractorRegNumber });
+  };
+  onInstallationAgeChange = installationAge => {
+    this.setState({ installationAge });
+  };
+  onOccupantNameChange = occupantName => {
+    this.setState({ occupantName });
+  };
+  onOccupantAddressChange = occupantAddress => {
+    this.setState({ occupantAddress });
+  };
+  onOccupantInAttendanceChange = occupantInAttendance => {
+    this.setState({ occupantInAttendance });
+  };
+  onIsFullExtentChange = isFullExtent => {
+    this.setState({ isFullExtent });
+  };
+  oncontractorAddressChange = contractorAddress => {
+    this.setState({ contractorAddress });
+  };
+
+  setOccupantInAttendance = occupantInAttendance => {
+    this.setState({ occupantInAttendance });
+  };
+
+  setIsFullExtent = isFullExtent => {
+    this.setState({ isFullExtent });
+  };
+
+  onInspectionReasonCommentChange = inspectionReasonComment => {
+    this.setState({ inspectionReasonComment });
+  };
+
+  onInstallationCategoryCommentChange = installationCategoryComment => {
+    this.setState({ installationCategoryComment });
   };
 
   handleLogout = async () => {
@@ -28,9 +129,15 @@ export default class Home extends React.Component {
     this.props.navigation.navigate('Auth')    
   };
   render() {
-    const txtInput = (
+    const inspectionReasonCommentTextInput = (
       <View>
-      <TextInput style={styles.TextInput}></TextInput>
+      <TextInput style={styles.TextInput} onChangeText={this.onInspectionReasonCommentChange}></TextInput>
+      </View>
+    );
+
+    const installationCategoryCommentTextInput = (
+      <View>
+      <TextInput style={styles.TextInput} onChangeText={this.onInspectionReasonCommentChange}></TextInput>
       </View>
     );
 
@@ -38,23 +145,24 @@ export default class Home extends React.Component {
     <View style={styles.container}>
       <Text>Home</Text>
       <Button onPress={this.handleLogout} title="Logout"></Button>
+      <View style={styles.row}>
 
-      <View style={styles.inputView}>
+      <View style={styles.prNumber}>
       <Text>PR Number</Text>
           <TextInput
               style={styles.TextInput}
               placeholder="PR Number"
               placeholderTextColor="grey"
-              value={this.state.username}
+              value={this.state.c}
               maxLength={256}
               color="#cd077d"
-              onChangeText={this.onUsernameChange}
+              onChangeText={this.onPrNumberChange}
               
               autoCapitalize="none"
               autoCorrect={false}
           />
       </View>
-      <View style={styles.inputView}>
+      <View style={styles.contractorName}>
       <Text>Contractor Name</Text>
           <TextInput
               style={styles.TextInput}
@@ -63,13 +171,13 @@ export default class Home extends React.Component {
               value={this.state.username}
               maxLength={256}
               color="#cd077d"
-              onChangeText={this.onUsernameChange}
+              onChangeText={this.onContractorNameChange}
               
               autoCapitalize="none"
               autoCorrect={false}
           />
       </View>
-      <View style={styles.inputView}>
+      <View style={styles.contractorAddress}>
       <Text>Contractor Address</Text>
           <TextInput
               style={styles.TextInput}
@@ -78,13 +186,14 @@ export default class Home extends React.Component {
               value={this.state.username}
               maxLength={256}
               color="#cd077d"
-              onChangeText={this.onUsernameChange}
+              onChangeText={this.onContractorAddressChange}
               
               autoCapitalize="none"
               autoCorrect={false}
           />
       </View>
-      <View style={styles.inputView}>
+      </View>
+      <View style={styles.contractorRegNumber}>
       <Text>Contractor Registration Number</Text>
           <TextInput
               style={styles.TextInput}
@@ -93,13 +202,13 @@ export default class Home extends React.Component {
               value={this.state.username}
               maxLength={256}
               color="#cd077d"
-              onChangeText={this.onUsernameChange}
+              onChangeText={this.onContractorRegNumberChange}
               
               autoCapitalize="none"
               autoCorrect={false}
           />
       </View>
-      <View style={styles.inputView}>
+      <View style={styles.installationAge}>
       <Text>Installation Approx. Age</Text>
           <TextInput
               style={styles.TextInput}
@@ -108,13 +217,13 @@ export default class Home extends React.Component {
               value={this.state.username}
               maxLength={256}
               color="#cd077d"
-              onChangeText={this.onUsernameChange}
+              onChangeText={this.onInstallationAgeChange}
               
               autoCapitalize="none"
               autoCorrect={false}
           />
       </View>
-      <View style={styles.inputView}>
+      <View style={styles.occupantName}>
       <Text>Occupant Name</Text>
           <TextInput
               style={styles.TextInput}
@@ -123,13 +232,13 @@ export default class Home extends React.Component {
               value={this.state.username}
               maxLength={256}
               color="#cd077d"
-              onChangeText={this.onUsernameChange}
+              onChangeText={this.onOccupantNameChange}
               
               autoCapitalize="none"
               autoCorrect={false}
           />
       </View>
-      <View style={styles.inputView}>
+      <View style={styles.occupantAddress}>
         <Text>Occupant Address</Text>
           <TextInput
               style={styles.TextInput}
@@ -138,25 +247,26 @@ export default class Home extends React.Component {
               value={this.state.username}
               maxLength={256}
               color="#cd077d"
-              onChangeText={this.onUsernameChange}
+              onChangeText={this.onOccupantAddressChange}
               
               autoCapitalize="none"
               autoCorrect={false}
           />
       </View>
-      <View style={styles.inputView}>
+      <View style={styles.occupantInAttendance}>
         <Text>Occupant in Attendance?</Text>
         <CheckBox
-                  value={this.state.isSelected}
-                  onValueChange={this.setSelection.bind(this)}></CheckBox>
+                  value={this.state.occupantInAttendance}
+                  onValueChange={this.onOccupantInAttendanceChange.bind(this)}></CheckBox>
+                  {this.state.occupantInAttendance ? <Text>"YES"</Text> : <Text>NO</Text>}
       </View>
-      <View style={styles.container}>
+      <View style={styles.installationCategory}>
         <Text>Installation Category</Text>
       <Picker
-  selectedValue={this.state.categoryValue}
+  selectedValue={this.state.installationCategory}
   onValueChange={
     (itemValue) =>
-    this.setState({categoryValue: itemValue})
+    this.setState({installationCategory: itemValue})
     // console.log(this.state.value)
   }>
   <Picker.Item label="Domestic" value="domestic" />
@@ -164,169 +274,54 @@ export default class Home extends React.Component {
   <Picker.Item label="Industrial" value="industrial" />
   <Picker.Item label="Other (Please Specify)" value="other"/>
 </Picker>
-{this.state.categoryValue === 'other' ? txtInput : console.log(this.state)}
+{this.state.installationCategory === 'other' ? installationCategoryCommentTextInput : inspectionReasonCommentTextInput}
         </View>
-        <View>
-        <View style={styles.container}>
+        <View style={styles.inspectionReason}>
         <Text>Reason For Inspection</Text>
       <Picker
-  selectedValue={this.state.reasonValue}
+  selectedValue={this.state.inspectionReason}
   onValueChange={
     (itemValue) =>
-    this.setState({reasonValue: itemValue})
+    this.setState({inspectionReason: itemValue})
     // console.log(this.state.value)
   }>
   <Picker.Item label="Insurance Inspection" value="insurance-inspection" />
   <Picker.Item label="Safety Audit" value="safety-audit" />
   <Picker.Item label="Other (Please Specify)" value="other"/>
 </Picker>
-{this.state.reasonValue === 'other' ? txtInput : console.log(this.state)}
+{this.state.inspectionReason === 'other' ? inspectionReasonCommentTextInput : installationCategoryCommentTextInput}
         </View>
+        <View style={styles.fullextent}>
+        <Text>Is the Full Extent of the Installation Covered by This Report?</Text>
+        <CheckBox
+          value={this.state.isFullExtent}
+          onValueChange={this.onIsFullExtentChange.bind(this)}></CheckBox>
+          {this.state.isFullExtent ? <Text>"YES"</Text> : <Text>NO</Text>}
+      </View>
+
+      <View style={styles.container}>
+        <Text>Type of System Earthing</Text>
+      <Picker
+  selectedValue={this.state.earthingType}
+  onValueChange={
+    (itemValue) =>
+    this.setState({earthingType: itemValue})
+    // console.log(this.state.value)
+  }>
+  <Picker.Item label="TNCS" value="tncs" />
+  <Picker.Item label="TT" value="tt" />
+  <Picker.Item label="TNS" value="tns" />
+  <Picker.Item label="IT" value="it" />
+</Picker>
         </View>
+
+        <TouchableOpacity
+                        style={styles.loginBtn}
+                        onPress={this.handleSaveReport.bind(this)}
+                    >
+                        <Text style={styles.loginText}>Save Report</Text>
+                    </TouchableOpacity>
     </View>
   )
 }
 }
-
-const styles = StyleSheet.create({
-  tabContainer: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: "#fff",
-      width: "100%",
-  },
-  reg_icon: {
-      fontSize: 250,
-      marginTop: "5%",
-      alignItems: "center",
-      alignContent: "center",
-      color: "#cd077d",
-      paddingLeft: "5%",
-      paddingBottom: "1%",
-  },
-  icon: {
-      // flex: 1,
-      marginTop: "20%",
-      fontSize: 250,
-      alignItems: "center",
-      alignContent: "center",
-      color: "#cd077d",
-      paddingLeft: "5%",
-  },
-  container: {
-      flex: 1,
-      backgroundColor: "#fff",
-      alignItems: "center",
-      justifyContent: "center",
-  },
-
-  image: {
-      height: 150,
-      width: 150,
-      marginLeft: '40%',
-  },
-  // t:{
-  //   marginTop:'50%',
-  //   marginLeft:'45%',
-  //   flex: 1,
-  // },
-
-  inputView: {
-    flex: 1, 
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
-  },
-  errorMessageContainerStyle: {
-      marginBottom: 8,
-      backgroundColor: "#fff",
-      padding: 8,
-      borderRadius: 4,
-  },
-
-  errorMessageTextStyle: {
-      color: "#db2828",
-      textAlign: "center",
-      fontSize: 12,
-  },
-  checkbox: {
-    marginLeft:'10px',
-  },
-
-  TextInput: {
-    marginLeft:'10px',
-    borderWidth: '1px',
-      height: 25,
-      width: "25%",
-      flex: 1,
-      padding: 0,
-      //   marginLeft: "50%",
-      textAlign: "center",
-  },
-
-  forgot_button: {
-      height: 30,
-      textAlign: "center",
-      color: "#db2828",
-      //   marginBottom: 5,
-  },
-  account_button: {
-      textAlign: "center",
-      height: 30,
-      color: "#db2828",
-      // marginBottom: 10,
-  },
-  reg_loginBtn: {
-      width: "80%",
-      borderRadius: 25,
-      height: 50,
-      alignItems: "center",
-      justifyContent: "center",
-      marginTop: 10,
-      backgroundColor: "#cd077d",
-  },
-  loginBtn: {
-      width: "80%",
-      borderRadius: 25,
-      height: 50,
-      marginLeft:'10%',
-      alignItems: "center",
-      justifyContent: "center",
-      marginTop: 40,
-      backgroundColor: "blue",
-  },
-  loginText: {
-      color: "#FEF2F2",
-  },
-  container2: {
-    marginHorizontal: 20,
-    marginBottom: 22.5,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    flexDirection: 'row',
-    zIndex: 10,
-
-    //
-    marginTop: 150,
-    flex: 1,
-  },
-  containerStyles: {
-    minHeight: 50,
-    minWidth: 149,
-    // borderColor: '#6F8C95',
-    // borderRadius: 6,
-  },
-  dropDownStyles: {
-    backgroundColor: '#fff',
-  },
-  labelStyles: {
-    color: '#6F8C95',
-    fontSize: 14,
-    textAlign: 'left',
-  },
-  itemStyles: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-  },
-});

@@ -1,8 +1,10 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import authHeader from "./auth";
 // import { getCurrentRole } from './user_service';
 
-const API_URL = "http://188.141.36.19:1969/api/auth/";
+const API_URL = "http://localhost:1969/api/auth/";
+const API_SAVE_REPORT_URL = "http://localhost:1969/api/report/1/"
 
 export const login = async (username, password) => {
     return axios
@@ -51,5 +53,53 @@ export const logout = async () => {
             );
             // ADD THIS THROW error
             throw error;
+        });
+};
+
+export const saveReport = async (prNumber,
+    contractorName, contractorAddress,
+    contractorRegNumber,
+    installationAge,
+    occupantName,
+    occupantAddress,
+    occupantInAttendance,
+    installationCategory,
+    installationCategoryComment,
+    inspectionReason,
+    inspectionReasonComment,
+    isFullExtent,
+    earthingType) => {
+    console.log("getting user board");
+    if (installationCategory === 'other') {
+        installationCategory = installationCategoryComment
+    }
+    if (inspectionReason === 'other'){
+        inspectionReason = inspectionReasonComment
+    }
+    return axios({
+        method: "POST",
+        url: API_SAVE_REPORT_URL + "insert",
+        headers: await authHeader(),
+        data: {
+            prNo: prNumber,
+            contractorName: contractorName,
+            contractorAddress: contractorAddress,
+            contractorRegNo: contractorRegNumber,
+            installationAge: installationAge,
+            occupantName: occupantName,
+            occupantAddress: occupantAddress,
+            occupantInAttendance: occupantInAttendance,
+            installationCategory: installationCategory,
+            inspectionReason: inspectionReason,
+            installationExtentCoveredByReport: isFullExtent,
+            earthingType: earthingType,
+
+        },
+    }).then(response => 
+            response.data
+        ).catch(function (error) {
+            console.log("You do not have User access: " + error.message);
+            // ADD THIS THROW error
+            return "";
         });
 };
