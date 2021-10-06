@@ -8,8 +8,10 @@ export const styles = StyleSheet.create({
         // justifyContent: "center",
     },
     row: {
-
         flexDirection:'row',
+    },
+    homebtn: {
+      margin:"50px",
     },
     prnumber: {
         flex:1,

@@ -2,7 +2,7 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import authHeader from "./auth";
 // import { getCurrentRole } from './user_service';
-
+// 188.141.36.19
 const API_URL = "http://localhost:1969/api/auth/";
 const API_SAVE_REPORT_URL = "http://localhost:1969/api/report/1/"
 
@@ -98,7 +98,7 @@ export const saveReport = async (prNumber,
     }).then(response => 
             response.data
         ).catch(function (error) {
-            console.log("You do not have User access: " + error.message);
+            console.log("Nope" + error);
             // ADD THIS THROW error
             return "";
         });
