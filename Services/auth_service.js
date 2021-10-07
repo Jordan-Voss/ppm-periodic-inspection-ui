@@ -56,7 +56,7 @@ export const logout = async () => {
         });
 };
 
-export const saveReport = async (prNumber,
+export const saveReport = async (reportName, prNumber,
     contractorName, contractorAddress,
     contractorRegNumber,
     installationAge,
@@ -81,6 +81,7 @@ export const saveReport = async (prNumber,
         url: API_SAVE_REPORT_URL + "insert",
         headers: await authHeader(),
         data: {
+            reportName: reportName,
             prNo: prNumber,
             contractorName: contractorName,
             contractorAddress: contractorAddress,

@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import { styles } from '../Styles/styles';
 
 const initialState = {
+  reportName: '',
   prNumber: null,
   contractorName: "",
   contractorAddress:"",
@@ -28,6 +29,7 @@ export default class NewReport extends React.Component {
   state = initialState;
   handleSaveReport = async () => {
     const {
+    reportName,
     prNumber,
     contractorName, contractorAddress,
     contractorRegNumber,
@@ -55,7 +57,7 @@ export default class NewReport extends React.Component {
       inspectionReasonComment,
       isFullExtent,
       earthingType);
-    const respon = await saveReport(prNumber,
+    const respon = await saveReport(reportName, prNumber,
       contractorName, contractorAddress,
       contractorRegNumber,
       installationAge,
@@ -73,6 +75,10 @@ export default class NewReport extends React.Component {
 
 };
 
+
+  onReportNameChange = reportName => {
+  this.setState({ reportName });
+  };
 
   onPrNumberChange = prNumber => {
     this.setState({ prNumber });
@@ -146,6 +152,21 @@ export default class NewReport extends React.Component {
       <Text>Home</Text>
       <Button onPress={this.handleLogout} title="Back"></Button>
       <View style={styles.row}>
+      <View style={styles.prNumber}>
+      <Text>Report Name</Text>
+          <TextInput
+              style={styles.TextInput}
+              placeholder="Report Name"
+              placeholderTextColor="grey"
+              value={this.state.reportName}
+              maxLength={256}
+              color="#cd077d"
+              onChangeText={this.onReportNameChange}
+              
+              autoCapitalize="none"
+              autoCorrect={false}
+          />
+      </View>
 
       <View style={styles.prNumber}>
       <Text>PR Number</Text>

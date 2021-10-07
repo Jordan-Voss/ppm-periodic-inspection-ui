@@ -2,8 +2,8 @@ import axios from "axios";
 import authHeader from "./auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const API_URL = "http://188.141.36.19:8080/api/auth/";
-const API_TEST_URL = "http://188.141.36.19:8080/api/test/";
+const API_URL = "http://localhost:1969/api/report/1";
+const API_TEST_URL = "http://188.141.36.19:1969/api/test/";
 
 const getPublicContent = () => {
     return axios
@@ -48,6 +48,15 @@ export const getModeratorBoard = async () => {
             return "";
         });
 };
+
+export const getReports = async () => {
+    return axios
+        .get(API_URL, {headers: await authHeader() })
+        .then(response => response.data)
+        .catch(function (error) {
+            console.log(error.message)
+        })
+}
 
 export const logout = async () => {
     console.log("out");

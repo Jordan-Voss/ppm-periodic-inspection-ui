@@ -1,5 +1,6 @@
 import React from 'react'
 import { CheckBox, Button, TextInput, Text, TouchableOpacity, View } from 'react-native'
+import { getReports } from '../Services/user_service';
 import { styles } from '../Styles/styles'
 
 export default class Home extends React.Component {
@@ -9,8 +10,11 @@ export default class Home extends React.Component {
       this.props.navigation.navigate('NewReport');
   }
 
-  reports() {
-    this.props.navigation.navigate('Reports');
+  async reports() {
+    console.log('getting reports');
+    const resp = await getReports();
+    console.log(resp[1]);
+    this.props.navigation.navigate('Reports', {reportsArray: resp });
   }
 
   render() {
