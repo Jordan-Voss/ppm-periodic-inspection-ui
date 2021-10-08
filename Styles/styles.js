@@ -10,14 +10,17 @@ export const styles = StyleSheet.create({
     row: {
         flexDirection:'row',
     },
+    viewReportsNames: {
+      fontSize: 20,
+    },
     viewReportButtonText:{
-      fontSize: 16,
-      lineHeight: 21,
-      fontWeight: 'bold',
-      letterSpacing: 0.25,
       color: 'white',
     },
     viewReportsBtn: {
+      marginLeft: '10%',
+      marginRight:'10%',
+      width: '25px',
+      height: '10px',
       alignItems: 'center',
       justifyContent: 'center',
       paddingVertical: 12,

@@ -2,8 +2,17 @@ import React from 'react'
 import { CheckBox, Button, FlatList, TextInput, Text, TouchableOpacity, View, Pressable } from 'react-native'
 import { styles } from '../Styles/styles'
 
+const initialState={
+    key: null,
+}
 export default class Reports extends React.Component {
+    state=initialState;
+    onPressEdit(index, array) {
+        this.props.navigation.navigate('EditReport', { index: index, array: array});
+    }
+
     render() {
+        // const key = 0;
         const {reportsArray} = this.props.navigation.state.params;
         return (
         <View>
@@ -11,33 +20,22 @@ export default class Reports extends React.Component {
             <Text>RESPONSE</Text>
             
             <Text>{}</Text>
-            {reportsArray.map((item) =>
-            <View>
-            <Text key={item.prNo}>{item.prNo}</Text>
-            <Pressable style={styles.viewReportsBtn} title="Edit">
+            {reportsArray.map((item, index) =>
+            <View style={styles.row} key={index}>
+            <Text style={styles.viewReportsNames} key={item.reportName}>{item.reportName}</Text>
+            <TouchableOpacity style={styles.viewReportsBtn} onPress={this.onPressEdit.bind(this, index, this.props.navigation.state.params)}>
                 <Text style={styles.viewReportButtonText}>Edit</Text>
-            </Pressable>
-            <Pressable style={styles.viewReportsBtn}title="View"></Pressable>
+                {console.log(index)}
+                {console.log(reportsArray[index])}
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.viewReportsBtn}title="View">
+            <Text style={styles.viewReportButtonText}>View</Text>
+            </TouchableOpacity>
             </View>
             )}
+            
             </View>
             <View>
-
-            {/* <FlatList
-        data={[
-          {key: 'Devin'},
-          {key: 'Dan'},
-          {key: 'Dominic'},
-          {key: 'Jackson'},
-          {key: 'James'},
-          {key: 'Joel'},
-          {key: 'John'},
-          {key: 'Jillian'},
-          {key: 'Jimmy'},
-          {key: 'Julie'},
-        ]}
-        renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
-      /> */}
             </View>
         </View>
         )
