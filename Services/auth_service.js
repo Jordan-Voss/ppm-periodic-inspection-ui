@@ -55,6 +55,51 @@ export const logout = async () => {
             throw error;
         });
 };
+export const updateReport = async (reportName, prNumber,
+    contractorName, contractorAddress,
+    contractorRegNumber,
+    installationAge,
+    occupantName,
+    occupantAddress,
+    occupantInAttendance,
+    installationCategory,
+    installationCategoryComment,
+    inspectionReason,
+    inspectionReasonComment,
+    isFullExtent,
+    earthingType) => {
+    console.log("getting user board");
+    return axios({
+        method: "POST",
+        url: API_SAVE_REPORT_URL + "update",
+        headers: await authHeader(),
+        data: {
+            reportName: reportName,
+            prNo: prNumber,
+            contractorName: contractorName,
+            contractorAddress: contractorAddress,
+            contractorRegNo: contractorRegNumber,
+            installationAge: installationAge,
+            occupantName: occupantName,
+            occupantAddress: occupantAddress,
+            occupantInAttendance: occupantInAttendance,
+            installationCategory: installationCategory,
+            installationCategoryComment: installationCategoryComment,
+            inspectionReason: inspectionReason,
+            inspectionReasonComment: inspectionReasonComment,
+            installationExtentCoveredByReport: isFullExtent,
+            earthingType: earthingType,
+
+        },
+    }).then(response => 
+            response.data
+        ).catch(function (error) {
+            console.log("Nope" + error);
+            // ADD THIS THROW error
+            return "";
+        });
+};
+
 
 export const saveReport = async (reportName, prNumber,
     contractorName, contractorAddress,
@@ -70,12 +115,6 @@ export const saveReport = async (reportName, prNumber,
     isFullExtent,
     earthingType) => {
     console.log("getting user board");
-    if (installationCategory === 'other') {
-        installationCategory = installationCategoryComment
-    }
-    if (inspectionReason === 'other'){
-        inspectionReason = inspectionReasonComment
-    }
     return axios({
         method: "POST",
         url: API_SAVE_REPORT_URL + "insert",
@@ -91,7 +130,9 @@ export const saveReport = async (reportName, prNumber,
             occupantAddress: occupantAddress,
             occupantInAttendance: occupantInAttendance,
             installationCategory: installationCategory,
+            installationCategoryComment: installationCategoryComment,
             inspectionReason: inspectionReason,
+            inspectionReasonComment: inspectionReasonComment,
             installationExtentCoveredByReport: isFullExtent,
             earthingType: earthingType,
 

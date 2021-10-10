@@ -75,6 +75,10 @@ export default class NewReport extends React.Component {
 
 };
 
+onpress = () => {
+  console.log(this.state)
+}
+
 
   onReportNameChange = reportName => {
   this.setState({ reportName });
@@ -143,7 +147,7 @@ export default class NewReport extends React.Component {
 
     const installationCategoryCommentTextInput = (
       <View>
-      <TextInput style={styles.TextInput} onChangeText={this.onInspectionReasonCommentChange}></TextInput>
+      <TextInput style={styles.TextInput} onChangeText={this.onInstallationCategoryCommentChange}></TextInput>
       </View>
     );
 
@@ -279,7 +283,7 @@ export default class NewReport extends React.Component {
         <CheckBox
                   value={this.state.occupantInAttendance}
                   onValueChange={this.onOccupantInAttendanceChange.bind(this)}></CheckBox>
-                  {this.state.occupantInAttendance ? <Text>"YES"</Text> : <Text>NO</Text>}
+                  {this.state.occupantInAttendance ? <Text>YES</Text> : <Text>NO</Text>}
       </View>
       <View style={styles.installationCategory}>
         <Text>Installation Category</Text>
@@ -295,7 +299,7 @@ export default class NewReport extends React.Component {
   <Picker.Item label="Industrial" value="industrial" />
   <Picker.Item label="Other (Please Specify)" value="other"/>
 </Picker>
-{this.state.installationCategory === 'other' ? installationCategoryCommentTextInput : inspectionReasonCommentTextInput}
+{this.state.installationCategory === 'other' ? installationCategoryCommentTextInput : null}
         </View>
         <View style={styles.inspectionReason}>
         <Text>Reason For Inspection</Text>
@@ -310,14 +314,14 @@ export default class NewReport extends React.Component {
   <Picker.Item label="Safety Audit" value="safety-audit" />
   <Picker.Item label="Other (Please Specify)" value="other"/>
 </Picker>
-{this.state.inspectionReason === 'other' ? inspectionReasonCommentTextInput : installationCategoryCommentTextInput}
+{this.state.inspectionReason === 'other' ? inspectionReasonCommentTextInput : null}
         </View>
         <View style={styles.fullextent}>
         <Text>Is the Full Extent of the Installation Covered by This Report?</Text>
         <CheckBox
           value={this.state.isFullExtent}
           onValueChange={this.onIsFullExtentChange.bind(this)}></CheckBox>
-          {this.state.isFullExtent ? <Text>"YES"</Text> : <Text>NO</Text>}
+          {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>}
       </View>
 
       <View style={styles.container}>
@@ -336,6 +340,12 @@ export default class NewReport extends React.Component {
 </Picker>
         </View>
 
+        <TouchableOpacity
+                        style={styles.loginBtn}
+                        onPress={this.onpress.bind(this)}
+                    >
+                        <Text style={styles.loginText}>check Report</Text>
+                    </TouchableOpacity>
         <TouchableOpacity
                         style={styles.loginBtn}
                         onPress={this.handleSaveReport.bind(this)}
