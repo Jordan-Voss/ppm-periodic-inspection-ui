@@ -13,7 +13,6 @@ export default class Home extends React.Component {
   async reports() {
     console.log('getting reports');
     const resp = await getReports();
-    console.log(resp[1]);
     this.props.navigation.navigate('Reports', {reportsArray: resp });
   }
 

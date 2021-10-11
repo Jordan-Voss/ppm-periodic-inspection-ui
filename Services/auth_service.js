@@ -3,8 +3,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import authHeader from "./auth";
 // import { getCurrentRole } from './user_service';
 // 188.141.36.19
-const API_URL = "http://localhost:1969/api/auth/";
-const API_SAVE_REPORT_URL = "http://localhost:1969/api/report/1/"
+const API_URL = "http://188.141.36.19:1969/api/auth/";
+const API_SAVE_REPORT_URL = "http://188.141.36.19/:1969/api/report/"
 
 export const login = async (username, password) => {
     return axios
@@ -26,7 +26,7 @@ export const login = async (username, password) => {
         .catch(function (error) {
             console.log(
                 "There has been a problem with your fetch operation: " +
-                    error.message,
+                    error.message + error,
             );
         });
 };

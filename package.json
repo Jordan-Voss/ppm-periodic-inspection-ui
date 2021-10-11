@@ -6,6 +6,7 @@
     "web": "expo start --web",
     "start": "react-native start"
   },
+  "proxy":"http://188.141.36.19:1969",
   "dependencies": {
     "@babel/runtime": "^7.15.4",
     "@react-native-async-storage/async-storage": "^1.15.8",
