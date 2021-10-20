@@ -12,7 +12,9 @@ const AppNav = createStackNavigator(
     EditReport: { screen: EditReport}
   },
   {
-    initialRouteName: 'Home'
+    initialRouteName: 'Home',
+    headerMode: 'none'
+
   }
 )
 

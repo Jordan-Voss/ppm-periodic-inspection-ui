@@ -2,7 +2,7 @@ import axios from "axios";
 import authHeader from "./auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const API_URL = "http://localhost:1969/api/report/1";
+const API_URL = "http://188.141.36.19:1969/api/report/";
 const API_TEST_URL = "http://188.141.36.19:1969/api/test/";
 
 const getPublicContent = () => {

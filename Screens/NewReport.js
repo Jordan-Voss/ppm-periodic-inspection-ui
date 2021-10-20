@@ -1,9 +1,13 @@
 import React from 'react'
-import { CheckBox, Button, TextInput, Text, TouchableOpacity, View } from 'react-native'
+import { CheckBox, Button, TextInput, Text, Image, TouchableOpacity, View } from 'react-native'
 import { logout, saveReport } from '../Services/auth_service';
 import {Picker} from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/Feather';
 import { styles } from '../Styles/styles';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { ScrollView } from 'react-native-gesture-handler';
+
+
 
 const initialState = {
   reportName: '',
@@ -27,6 +31,12 @@ const initialState = {
 
 export default class NewReport extends React.Component {
   state = initialState;
+  logouts = () => {
+    logout();
+    this.props.navigation.navigate('Login');
+
+  }
+
   handleSaveReport = async () => {
     const {
     reportName,
@@ -141,25 +151,47 @@ onpress = () => {
   render() {
     const inspectionReasonCommentTextInput = (
       <View>
-      <TextInput style={styles.TextInput} onChangeText={this.onInspectionReasonCommentChange}></TextInput>
+      <TextInput style={styles.reportInput} onChangeText={this.onInspectionReasonCommentChange}></TextInput>
       </View>
     );
 
     const installationCategoryCommentTextInput = (
       <View>
-      <TextInput style={styles.TextInput} onChangeText={this.onInstallationCategoryCommentChange}></TextInput>
+      <TextInput style={styles.reportInput} onChangeText={this.onInstallationCategoryCommentChange}></TextInput>
       </View>
     );
 
   return (
+    <ScrollView>
     <View style={styles.container}>
-      <Text>Home</Text>
-      <Button onPress={this.handleLogout} title="Back"></Button>
+      <View style={{flexDirection:"row"}}>
+                  <View style={{flex:1}}>
+      <TouchableOpacity
+        onPress={this.handleLogout}
+        style={styles.roundButton2}>
+        <MaterialCommunityIcons name="keyboard-backspace" size={24} color="black" />
+        <Text>Back</Text>
+      </TouchableOpacity>
+      </View>
+      <View style={{flex:1}}>
+        <TouchableOpacity
+        onPress={this.logouts}
+        style={styles.roundButton1}>
+        <MaterialCommunityIcons name="logout" size={24} color="black" />
+        <Text>Logout</Text>
+      </TouchableOpacity>
+      </View>
+      </View>
+      <View>
+            <Image style={styles.homeImage} source={require('../images/PPM.png')}
+            />
+        </View>
+      {/* <Button onPress={this.handleLogout} title="Back"></Button> */}
       <View style={styles.row}>
       <View style={styles.prNumber}>
       <Text>Report Name</Text>
           <TextInput
-              style={styles.TextInput}
+              style={styles.reportInput}
               placeholder="Report Name"
               placeholderTextColor="grey"
               value={this.state.reportName}
@@ -175,7 +207,7 @@ onpress = () => {
       <View style={styles.prNumber}>
       <Text>PR Number</Text>
           <TextInput
-              style={styles.TextInput}
+              style={styles.reportInput}
               placeholder="PR Number"
               placeholderTextColor="grey"
               value={this.state.c}
@@ -190,7 +222,7 @@ onpress = () => {
       <View style={styles.contractorName}>
       <Text>Contractor Name</Text>
           <TextInput
-              style={styles.TextInput}
+              style={styles.reportInput}
               placeholder="Contractor Name"
               placeholderTextColor="grey"
               value={this.state.username}
@@ -205,7 +237,7 @@ onpress = () => {
       <View style={styles.contractorAddress}>
       <Text>Contractor Address</Text>
           <TextInput
-              style={styles.TextInput}
+              style={styles.reportInput}
               placeholder="Contractor Address"
               placeholderTextColor="grey"
               value={this.state.username}
@@ -221,7 +253,7 @@ onpress = () => {
       <View style={styles.contractorRegNumber}>
       <Text>Contractor Registration Number</Text>
           <TextInput
-              style={styles.TextInput}
+              style={styles.reportInput}
               placeholder="Contractor Registration Number"
               placeholderTextColor="grey"
               value={this.state.username}
@@ -236,7 +268,7 @@ onpress = () => {
       <View style={styles.installationAge}>
       <Text>Installation Approx. Age</Text>
           <TextInput
-              style={styles.TextInput}
+              style={styles.reportInput}
               placeholder="Installation Approx Age"
               placeholderTextColor="grey"
               value={this.state.username}
@@ -251,7 +283,7 @@ onpress = () => {
       <View style={styles.occupantName}>
       <Text>Occupant Name</Text>
           <TextInput
-              style={styles.TextInput}
+              style={styles.reportInput}
               placeholder="Occupant Name"
               placeholderTextColor="grey"
               value={this.state.username}
@@ -266,7 +298,7 @@ onpress = () => {
       <View style={styles.occupantAddress}>
         <Text>Occupant Address</Text>
           <TextInput
-              style={styles.TextInput}
+              style={styles.reportInput}
               placeholder="Occupant Address"
               placeholderTextColor="grey"
               value={this.state.username}
@@ -353,6 +385,7 @@ onpress = () => {
                         <Text style={styles.loginText}>Save Report</Text>
                     </TouchableOpacity>
     </View>
+    </ScrollView>
   )
 }
 }
