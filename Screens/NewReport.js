@@ -6,8 +6,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import { styles } from '../Styles/styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
-
-
+import { options } from './PickerOptions';
 
 const initialState = {
   reportName: '',
@@ -52,7 +51,8 @@ export default class NewReport extends React.Component {
     inspectionReason,
     inspectionReasonComment,
     isFullExtent,
-    earthingType 
+    earthingType,
+    installationVoltage
   } = this.state;
     console.log(prNumber,
       contractorName, contractorAddress,
@@ -66,7 +66,8 @@ export default class NewReport extends React.Component {
       inspectionReason,
       inspectionReasonComment,
       isFullExtent,
-      earthingType);
+      earthingType,
+      installationVoltage);
     const respon = await saveReport(reportName, prNumber,
       contractorName, contractorAddress,
       contractorRegNumber,
@@ -79,7 +80,8 @@ export default class NewReport extends React.Component {
       inspectionReason,
       inspectionReasonComment,
       isFullExtent,
-      earthingType);
+      earthingType,
+      installationVoltage);
     // const msg = respon;
     console.log(respon);
 
@@ -142,6 +144,13 @@ onpress = () => {
 
   onInstallationCategoryCommentChange = installationCategoryComment => {
     this.setState({ installationCategoryComment });
+  };
+  onInstallationVoltageChange = installationVoltage => {
+    this.setState({ installationVoltage });
+  };
+
+  setInstallationVoltage = installationVoltage => {
+    this.setState({ installationVoltage });
   };
 
   handleLogout = async () => {
@@ -221,53 +230,40 @@ onpress = () => {
       </View>
       <View style={styles.contractorName}>
       <Text>Contractor Name</Text>
-          <TextInput
-              style={styles.reportInput}
-              placeholder="Contractor Name"
-              placeholderTextColor="grey"
-              value={this.state.username}
+          <Text
+              // style={styles.reportInput}
               maxLength={256}
               color="#cd077d"
-              onChangeText={this.onContractorNameChange}
-              
-              autoCapitalize="none"
-              autoCorrect={false}
-          />
+          >PPM </Text>
       </View>
       <View style={styles.contractorAddress}>
       <Text>Contractor Address</Text>
-          <TextInput
-              style={styles.reportInput}
-              placeholder="Contractor Address"
-              placeholderTextColor="grey"
-              value={this.state.username}
+      <Text
+              // style={styles.reportInput}
               maxLength={256}
               color="#cd077d"
-              onChangeText={this.onContractorAddressChange}
-              
-              autoCapitalize="none"
-              autoCorrect={false}
-          />
+          >PPM Address</Text>
       </View>
       </View>
       <View style={styles.contractorRegNumber}>
       <Text>Contractor Registration Number</Text>
-          <TextInput
-              style={styles.reportInput}
-              placeholder="Contractor Registration Number"
-              placeholderTextColor="grey"
-              value={this.state.username}
+      <Text
+              // style={styles.reportInput}
               maxLength={256}
               color="#cd077d"
-              onChangeText={this.onContractorRegNumberChange}
-              
-              autoCapitalize="none"
-              autoCorrect={false}
-          />
+          >123456789</Text>
       </View>
       <View style={styles.installationAge}>
       <Text>Installation Approx. Age</Text>
-          <TextInput
+      <Picker>
+  {Object.keys(options).map((key) => {
+        return (<Picker.Item label={options[key]} value={key} key={key}/>) //if you have a bunch of keys value pair
+    })}
+</Picker>
+      <View style={styles.installationCategory}>
+        <Text>Installation Category</Text>
+</View>
+          {/* <TextInput
               style={styles.reportInput}
               placeholder="Installation Approx Age"
               placeholderTextColor="grey"
@@ -278,7 +274,7 @@ onpress = () => {
               
               autoCapitalize="none"
               autoCorrect={false}
-          />
+          /> */}
       </View>
       <View style={styles.occupantName}>
       <Text>Occupant Name</Text>
@@ -371,6 +367,21 @@ onpress = () => {
   <Picker.Item label="IT" value="it" />
 </Picker>
         </View>
+        <View style={styles.installationVoltage}>
+      <Text>Installation Voltage</Text>
+          <TextInput
+              style={styles.installationVoltage}
+              placeholder="I nstallation Voltage"
+              placeholderTextColor="grey"
+              value={this.state.c}
+              maxLength={256}
+              color="#cd077d"
+              onChangeText={this.onInstallationVoltageChange}
+              
+              autoCapitalize="none"
+              autoCorrect={false}
+          />
+      </View>
 
         <TouchableOpacity
                         style={styles.loginBtn}

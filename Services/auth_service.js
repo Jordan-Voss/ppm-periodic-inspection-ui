@@ -67,7 +67,8 @@ export const updateReport = async (reportName, prNumber,
     inspectionReason,
     inspectionReasonComment,
     isFullExtent,
-    earthingType) => {
+    earthingType,
+    installationVoltage) => {
     console.log("getting user board");
     return axios({
         method: "POST",
@@ -89,6 +90,7 @@ export const updateReport = async (reportName, prNumber,
             inspectionReasonComment: inspectionReasonComment,
             installationExtentCoveredByReport: isFullExtent,
             earthingType: earthingType,
+            installationVoltage: installationVoltage,
 
         },
     }).then(response => 
@@ -113,7 +115,8 @@ export const saveReport = async (reportName, prNumber,
     inspectionReason,
     inspectionReasonComment,
     isFullExtent,
-    earthingType) => {
+    earthingType,
+    installationVoltage) => {
     console.log("getting user board");
     return axios({
         method: "POST",
@@ -135,6 +138,7 @@ export const saveReport = async (reportName, prNumber,
             inspectionReasonComment: inspectionReasonComment,
             installationExtentCoveredByReport: isFullExtent,
             earthingType: earthingType,
+            installationVoltage: installationVoltage,
 
         },
     }).then(response => 
