@@ -72,6 +72,8 @@ export const styles = StyleSheet.create({
     roundButton1: {
       width: '10%',
       height: '10%',
+      marginTop: '5%',
+      marginLeft: '5%',
       justifyContent: 'center',
       alignItems: 'center',
       paddingTop: '5%',
@@ -82,6 +84,8 @@ export const styles = StyleSheet.create({
     roundButton2: {
       width: '10%',
       height: '10%',
+      marginTop: '5%',
+      marginLeft: '5%',
       justifyContent: 'center',
       alignItems: 'center',
       padding: '5%',
