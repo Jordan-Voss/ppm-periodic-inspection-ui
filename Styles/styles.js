@@ -7,10 +7,28 @@ export const styles = StyleSheet.create({
       flex: 1,
       backgroundColor: "#fff",
     },
+    scrollview: {
+      flex:1,
+      width:"100%"
+    },
     row: {
+      flex: 1,
       flexDirection:'row',
     },
+    reportIds: {
+      flexDirection: "row",
+    },
 
+    occupantDetailsContainer: {
+      flex: 1,
+    },
+    contractorDetailsContainer: {
+      flex: 1,
+    },
+    detailsContainer:{
+      // flex: 1,
+      flexDirection: "row",
+    },
     // Home Screen
     homeImage: {
       height: '40%',
@@ -72,20 +90,20 @@ export const styles = StyleSheet.create({
     roundButton1: {
       width: '10%',
       height: '10%',
-      marginTop: '5%',
-      marginLeft: '5%',
+      marginTop: '15%',
+      marginRight: '15%',
       justifyContent: 'center',
       alignItems: 'center',
-      paddingTop: '5%',
-      marginLeft: '80%',
+      // paddingTop: '5%',
+      marginLeft: '75%',
       borderRadius: 100,
       backgroundColor: 'white',
     },
     roundButton2: {
       width: '10%',
       height: '10%',
-      marginTop: '5%',
-      marginLeft: '5%',
+      marginTop: '15%',
+      marginLeft: '15%',
       justifyContent: 'center',
       alignItems: 'center',
       padding: '5%',
@@ -95,6 +113,18 @@ export const styles = StyleSheet.create({
 
     // Report Editing
     prnumber: {
+      flex:1
+    },
+
+    reportName: {
+      flex: 1
+    },
+    contractornamelabel:{
+      // marginLeft:"10%",
+      flex:1,
+      justifyContent:'space-evenly',
+    },
+    contractornametext: {
       flex:1,
       justifyContent:'space-evenly',
     },
