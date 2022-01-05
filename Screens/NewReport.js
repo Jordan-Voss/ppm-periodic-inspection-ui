@@ -22,10 +22,11 @@ const initialState = {
   installationCategoryComment: '',
   inspectionReason: '',
   inspectionReasonComment: '',
-  isFullExtent: false,
+  isFullExtent: true,
   earthingType:"",
   categoryValue:"",
   reasonValue:"",
+  partialInspectionComment:"",
 };
 
 export default class NewReport extends React.Component {
@@ -51,6 +52,7 @@ export default class NewReport extends React.Component {
     inspectionReason,
     inspectionReasonComment,
     isFullExtent,
+    partialInspectionComment,
     earthingType,
     installationVoltage
   } = this.state;
@@ -66,6 +68,7 @@ export default class NewReport extends React.Component {
       inspectionReason,
       inspectionReasonComment,
       isFullExtent,
+      partialInspectionComment,
       earthingType,
       installationVoltage);
     const respon = await saveReport(reportName, prNumber,
@@ -80,6 +83,7 @@ export default class NewReport extends React.Component {
       inspectionReason,
       inspectionReasonComment,
       isFullExtent,
+      partialInspectionComment,
       earthingType,
       installationVoltage);
     // const msg = respon;
@@ -148,6 +152,9 @@ onpress = () => {
   onInstallationVoltageChange = installationVoltage => {
     this.setState({ installationVoltage });
   };
+  onPartialInspectionCommentChange = partialInspectionComment => {
+    this.setState({ partialInspectionComment});
+  }
 
   setInstallationVoltage = installationVoltage => {
     this.setState({ installationVoltage });
@@ -170,10 +177,30 @@ onpress = () => {
       </View>
     );
 
+    const partialInspectionComment = (
+      <View>
+      <TextInput style={styles.reportInput} onChangeText={this.onPartialInspectionCommentChange}></TextInput>
+      </View>
+    );
+
+    const singlePhaseVoltage = (
+      <View>
+      <TextInput style={styles.reportInput} onChangeText={this.onPartialInspectionCommentChange}></TextInput>
+      </View>
+    );
+
+    const threePhaseVoltage = (
+      <View>
+      <TextInput style={styles.reportInput} onChangeText={this.onPartialInspectionCommentChange}></TextInput>
+      <TextInput style={styles.reportInput} onChangeText={this.onPartialInspectionCommentChange}></TextInput>
+      <TextInput style={styles.reportInput} onChangeText={this.onPartialInspectionCommentChange}></TextInput>
+      <TextInput style={styles.reportInput} onChangeText={this.onPartialInspectionCommentChange}></TextInput>
+      </View>
+    );
+
   return (
-    // <View style={styles.container}>
+    // TOP BUTTONS AND IMAGES
     <ScrollView style={styles.container}>
-      {/* <View style={styles.container}> */}
         <View id="topBtns" style={{flexDirection:"row"}}>
           <View id="logoutbtn" style={{flex:1}}>
             <TouchableOpacity
@@ -195,10 +222,15 @@ onpress = () => {
         <View>
           <Image style={styles.homeImage} source={require('../images/PPM.png')}/>
         </View>
-        <View style={styles.reportIds}>
-        <View style={styles.reportName}>
-            <Text>Report Name</Text>
-            <TextInput
+
+{/* REPORT DETAILS */}
+        <View  style={styles.detailsContainer}>
+
+          <View id="contractor-details" style={styles.contractorDetailsContainer}>
+
+            <View style={styles.reportName}>
+              <Text>Report Name</Text>
+              <TextInput
               style={styles.reportInput}
               placeholder="Report Name"
               placeholderTextColor="grey"
@@ -210,239 +242,183 @@ onpress = () => {
               autoCapitalize="none"
               autoCorrect={false}
               />
-          </View>
-        <View style={styles.prNumber}>
-          <Text>PR Number</Text>
-          <TextInput
-          style={styles.reportInput}
-          placeholder="PR Number"
-          placeholderTextColor="grey"
-          value={this.state.c}
-          maxLength={256}
-          color="#cd077d"
-          onChangeText={this.onPrNumberChange}
+            </View>
 
-          autoCapitalize="none"
-          autoCorrect={false}
-          />
-        </View>
-        </View> {/* reportIds*/}
-        <View  style={styles.detailsContainer}>
-        <View id="contractor-details" style={styles.contractorDetailsContainer}>
-          
-        <View style={styles.contractorName}>
-          <Text style={styles.contractornamelabel}>Contractor Name</Text>
-          <Text style={styles.contractornametext}
-          // style={styles.reportInput}
-          maxLength={256}
-          color="#cd077d"
-          >PPM</Text>
-        </View>
-        <View style={styles.contractorAddress}>
-          <Text>Contractor Address</Text>
-          <Text
-          // style={styles.reportInput}
-          maxLength={256}
-          color="#cd077d"
-          >PPM Address</Text>
-        </View>
-        {/* </View> */}
-      {/* <View style={styles.contractorRegNumber}> */}
-        <Text>Contractor Registration Number</Text>
-        <Text
-        // style={styles.reportInput}
-        maxLength={256}
-        color="#cd077d"
-        >123456789</Text>
-      </View>  {/* contractor-details */}
+            <View style={styles.contractorName}>
+              <Text style={styles.contractornamelabel}>Contractor Name</Text>
+              <Text style={styles.contractornametext}
+              // style={styles.reportInput}
+              maxLength={256}
+              color="#cd077d"
+              >PPM</Text>
+            </View>
 
-      <View id="occupant-details" style={styles.occupantDetailsContainer}>
-        <View style={styles.occupantName}>
-          <Text>Occupant Name</Text>
-          <TextInput
-            style={styles.reportInput}
-            placeholder="Occupant Name"
-            placeholderTextColor="grey"
-            value={this.state.username}
-            maxLength={256}
-            color="#cd077d"
-            onChangeText={this.onOccupantNameChange}
+            <View style={styles.contractorAddress}>
+              <Text>Contractor Address</Text>
+              <Text
+              // style={styles.reportInput}
+              maxLength={256}
+              color="#cd077d"
+              >PPM Address</Text>
+            </View>
 
-            autoCapitalize="none"
-            autoCorrect={false}
-            />
+            <View style={styles.contractorRegNumber}>
+              <Text>Contractor Registration Number</Text>
+              <Text
+              // style={styles.reportInput}
+              maxLength={256}
+              color="#cd077d"
+              >123456789</Text>
+            </View>
+          </View>  {/* contractor-details */}
+
+          <View id="occupant-details" style={styles.occupantDetailsContainer}>
+            <View style={styles.prNumber}>
+              <Text style={styles.prNumberLabel}>PR Number</Text>
+              <TextInput
+              style={styles.reportInput}
+              placeholder="PR Number"
+              placeholderTextColor="grey"
+              value={this.state.prNumber}
+              maxLength={256}
+              color="#cd077d"
+              onChangeText={this.onPrNumberChange}
+
+              autoCapitalize="none"
+              autoCorrect={false}
+              />
+            </View>
+            <View style={styles.occupantName}>
+              <Text>Occupant Name</Text>
+              <TextInput
+                style={styles.reportInput}
+                placeholder="Occupant Name"
+                placeholderTextColor="grey"
+                value={this.state.username}
+                maxLength={256}
+                color="#cd077d"
+                onChangeText={this.onOccupantNameChange}
+
+                autoCapitalize="none"
+                autoCorrect={false}
+                />
+            </View>
+            <View style={styles.occupantAddress}>
+              <Text>Occupant Address</Text>
+              <TextInput
+                style={styles.reportInput}
+                placeholder="Occupant Address"
+                placeholderTextColor="grey"
+                value={this.state.username}
+                maxLength={256}
+                color="#cd077d"
+                onChangeText={this.onOccupantAddressChange}
+
+                autoCapitalize="none"
+                autoCorrect={false}
+                />
+            </View>
+            <View style={styles.occupantInAttendance}>
+              <Text>Occupant in Attendance?</Text>
+              <CheckBox
+              value={this.state.occupantInAttendance}
+              onValueChange={this.onOccupantInAttendanceChange.bind(this)}></CheckBox>
+              {this.state.occupantInAttendance ? <Text>YES</Text> : <Text>NO</Text>}
+            </View>
+          </View> {/* occupant-details*/}
+        </View>   {/* details-container */}
+
+
+{/* INSTALLATION DETAILS */}
+
+        <View style={styles.installationAge}>
+          <Text>Installation Approx. Age</Text>
+          <Picker>
+            {Object.keys(options).map((key) => {
+            return (<Picker.Item label={options[key]} value={key} key={key}/>) //if you have a bunch of keys value pair
+            })}
+          </Picker>
         </View>
-        <View style={styles.occupantAddress}>
-          <Text>Occupant Address</Text>
-          <TextInput
-            style={styles.reportInput}
-            placeholder="Occupant Address"
-            placeholderTextColor="grey"
-            value={this.state.username}
-            maxLength={256}
-            color="#cd077d"
-            onChangeText={this.onOccupantAddressChange}
 
-            autoCapitalize="none"
-            autoCorrect={false}
-            />
-        </View>
-        <View style={styles.occupantInAttendance}>
-          <Text>Occupant in Attendance?</Text>
-          <CheckBox
-          value={this.state.occupantInAttendance}
-          onValueChange={this.onOccupantInAttendanceChange.bind(this)}></CheckBox>
-          {this.state.occupantInAttendance ? <Text>YES</Text> : <Text>NO</Text>}
-        </View>
-        </View> {/* occupant-details*/}
-      </View>   {/* details-container */}
-
-
-      {/* <View style={styles.installationAge}> */}
-        <Text>Installation Approx. Age</Text>
-        <Picker>
-          {Object.keys(options).map((key) => {
-          return (<Picker.Item label={options[key]} value={key} key={key}/>) //if you have a bunch of keys value pair
-          })}
-        </Picker>
-        {/* <View style={styles.installationCategory}> */}
+        <View style={styles.installationCategory}>
           <Text>Installation Category</Text>
+          <Picker
+          selectedValue={this.state.installationCategory}
+          onValueChange={
+          (itemValue) =>
+          this.setState({installationCategory: itemValue})}>
+            <Picker.Item label="Domestic" value="domestic" />
+            <Picker.Item label="Commercial" value="commercial" />
+            <Picker.Item label="Industrial" value="industrial" />
+            <Picker.Item label="Other (Please Specify)" value="other"/>
+          </Picker>
+            {this.state.installationCategory === 'other' ? installationCategoryCommentTextInput : null}
+        </View>
+        <View style={styles.inspectionReason}>
+          <Text>Reason For Inspection</Text>
+          <Picker
+          selectedValue={this.state.inspectionReason}
+          onValueChange={
+          (itemValue) =>
+          this.setState({inspectionReason: itemValue})}>
+            <Picker.Item label="Insurance Inspection" value="insurance-inspection" />
+            <Picker.Item label="Safety Audit" value="safety-audit" />
+            <Picker.Item label="Other (Please Specify)" value="other"/>
+          </Picker>
+          {this.state.inspectionReason === 'other' ? inspectionReasonCommentTextInput : null}
+        </View>
+        <View style={styles.fullextent}>
+          <Text>Is the Full Extent of the Installation Covered by This Report?</Text>
+          <CheckBox
+          value={this.state.isFullExtent}
+          onValueChange={this.onIsFullExtentChange.bind(this)}></CheckBox>
+          {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>}
+          {!this.state.isFullExtent ? partialInspectionComment : null}
+        </View>
+
+{/* SYSTEM EARTHING */}
+
+        <View style={styles.container}>
+          <Text>Type of System Earthing</Text>
+          <Picker
+          selectedValue={this.state.earthingType}
+          onValueChange={
+          (itemValue) =>
+          this.setState({earthingType: itemValue})}>
+            <Picker.Item label="TNCS" value="tncs" />
+            <Picker.Item label="TT" value="tt" />
+            <Picker.Item label="TNS" value="tns" />
+            <Picker.Item label="IT" value="it" />
+          </Picker>
+        </View>
+        <View style={styles.installationVoltage}>
+          <Text>Installation Voltage</Text>
+          <Picker
+          selectedValue={this.state.installationVoltage}
+          onValueChange={
+          (itemValue) =>
+          this.setState({installationVoltage: itemValue})}>
+            <Picker.Item label="Single Phase" value="single" />
+            <Picker.Item label="Three Phase" value="three" />
+          </Picker>
+          {this.state.installationVoltage === 'three' ? threePhaseVoltage : singlePhaseVoltage}
+
+        </View>
+
+{/* BOTTTOM BUTTONS */}
+
+        <TouchableOpacity
+        style={styles.loginBtn}
+        onPress={this.onpress.bind(this)}>
+          <Text style={styles.loginText}>check Report</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+        style={styles.loginBtn}
+        onPress={this.handleSaveReport.bind(this)}>
+          <Text style={styles.loginText}>Save Report</Text>
+        </TouchableOpacity>
         {/* </View> */}
-{/* <TextInput
-style={styles.reportInput}
-placeholder="Installation Approx Age"
-placeholderTextColor="grey"
-value={this.state.username}
-maxLength={256}
-color="#cd077d"
-onChangeText={this.onInstallationAgeChange}
-
-autoCapitalize="none"
-autoCorrect={false}
-/> */}
-{/* </View> */}
-{/* <View style={styles.occupantName}>
-<Text>Occupant Name</Text>
-<TextInput
-style={styles.reportInput}
-placeholder="Occupant Name"
-placeholderTextColor="grey"
-value={this.state.username}
-maxLength={256}
-color="#cd077d"
-onChangeText={this.onOccupantNameChange}
-
-autoCapitalize="none"
-autoCorrect={false}
-/>
-{/* </View> */}
-{/* <View style={styles.occupantAddress}> */}
-{/* <Text>Occupant Address</Text>
-<TextInput
-style={styles.reportInput}
-placeholder="Occupant Address"
-placeholderTextColor="grey"
-value={this.state.username}
-maxLength={256}
-color="#cd077d"
-onChangeText={this.onOccupantAddressChange}
-
-autoCapitalize="none"
-autoCorrect={false}
-/>
-{/* </View> */}
-{/* <View style={styles.occupantInAttendance}> */}
-{/*
-<Text>Occupant in Attendance?</Text>
-<CheckBox
-value={this.state.occupantInAttendance}
-onValueChange={this.onOccupantInAttendanceChange.bind(this)}></CheckBox>
-{this.state.occupantInAttendance ? <Text>YES</Text> : <Text>NO</Text>} */} 
-{/* </View> */}
-{/* <View style={styles.installationCategory}> */}
-<Text>Installation Category</Text>
-<Picker
-selectedValue={this.state.installationCategory}
-onValueChange={
-(itemValue) =>
-this.setState({installationCategory: itemValue})
-// console.log(this.state.value)
-}>
-<Picker.Item label="Domestic" value="domestic" />
-<Picker.Item label="Commercial" value="commercial" />
-<Picker.Item label="Industrial" value="industrial" />
-<Picker.Item label="Other (Please Specify)" value="other"/>
-</Picker>
-{this.state.installationCategory === 'other' ? installationCategoryCommentTextInput : null}
-{/* </View> */}
-{/* <View style={styles.inspectionReason}> */}
-<Text>Reason For Inspection</Text>
-<Picker
-selectedValue={this.state.inspectionReason}
-onValueChange={
-(itemValue) =>
-this.setState({inspectionReason: itemValue})
-// console.log(this.state.value)
-}>
-<Picker.Item label="Insurance Inspection" value="insurance-inspection" />
-<Picker.Item label="Safety Audit" value="safety-audit" />
-<Picker.Item label="Other (Please Specify)" value="other"/>
-</Picker>
-{this.state.inspectionReason === 'other' ? inspectionReasonCommentTextInput : null}
-{/* </View> */}
-{/* <View style={styles.fullextent}> */}
-<Text>Is the Full Extent of the Installation Covered by This Report?</Text>
-<CheckBox
-value={this.state.isFullExtent}
-onValueChange={this.onIsFullExtentChange.bind(this)}></CheckBox>
-{this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>}
-{/* </View> */}
-
-{/* <View style={styles.container}> */}
-<Text>Type of System Earthing</Text>
-<Picker
-selectedValue={this.state.earthingType}
-onValueChange={
-(itemValue) =>
-this.setState({earthingType: itemValue})
-// console.log(this.state.value)
-}>
-<Picker.Item label="TNCS" value="tncs" />
-<Picker.Item label="TT" value="tt" />
-<Picker.Item label="TNS" value="tns" />
-<Picker.Item label="IT" value="it" />
-</Picker>
-{/* </View> */}
-{/* <View style={styles.installationVoltage}> */}
-<Text>Installation Voltage</Text>
-<TextInput
-style={styles.installationVoltage}
-placeholder="I nstallation Voltage"
-placeholderTextColor="grey"
-value={this.state.c}
-maxLength={256}
-color="#cd077d"
-onChangeText={this.onInstallationVoltageChange}
-
-autoCapitalize="none"
-autoCorrect={false}
-/>
-{/* </View> */}
-
-<TouchableOpacity
-style={styles.loginBtn}
-onPress={this.onpress.bind(this)}
->
-<Text style={styles.loginText}>check Report</Text>
-</TouchableOpacity>
-<TouchableOpacity
-style={styles.loginBtn}
-onPress={this.handleSaveReport.bind(this)}
->
-<Text style={styles.loginText}>Save Report</Text>
-</TouchableOpacity>
-{/* </View> */}
-</ScrollView>
+        </ScrollView>
 
 )
 }
