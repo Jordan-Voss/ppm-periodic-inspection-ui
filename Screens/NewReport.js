@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import { styles } from '../Styles/styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
-import { options } from './PickerOptions';
+import { options } from '../Components/PickerOptions';
 
 const initialState = {
   reportName: '',
@@ -27,6 +27,7 @@ const initialState = {
   categoryValue:"",
   reasonValue:"",
   partialInspectionComment:"",
+  deviceType: "",
 };
 
 export default class NewReport extends React.Component {
@@ -53,6 +54,7 @@ export default class NewReport extends React.Component {
     inspectionReasonComment,
     isFullExtent,
     partialInspectionComment,
+    deviceType,
     earthingType,
     installationVoltage
   } = this.state;
@@ -70,6 +72,7 @@ export default class NewReport extends React.Component {
       isFullExtent,
       partialInspectionComment,
       earthingType,
+      deviceType,
       installationVoltage);
     const respon = await saveReport(reportName, prNumber,
       contractorName, contractorAddress,
@@ -85,6 +88,7 @@ export default class NewReport extends React.Component {
       isFullExtent,
       partialInspectionComment,
       earthingType,
+      deviceType,
       installationVoltage);
     // const msg = respon;
     console.log(respon);
@@ -160,6 +164,10 @@ onpress = () => {
     this.setState({ installationVoltage });
   };
 
+  onDeviceTypeChange = deviceType => {
+    this.setState({deviceType});
+  }
+
   handleLogout = async () => {
     await logout();
     this.props.navigation.navigate('Home')    
@@ -184,17 +192,30 @@ onpress = () => {
     );
 
     const singlePhaseVoltage = (
-      <View>
-      <TextInput style={styles.reportInput} onChangeText={this.onPartialInspectionCommentChange}></TextInput>
+      <View style={styles.detailsContainer}>
+        <Text>L1</Text>
+      <TextInput style={styles.voltageInput} onChangeText={this.onPartialInspectionCommentChange}></TextInput>
       </View>
     );
 
     const threePhaseVoltage = (
-      <View>
-      <TextInput style={styles.reportInput} onChangeText={this.onPartialInspectionCommentChange}></TextInput>
-      <TextInput style={styles.reportInput} onChangeText={this.onPartialInspectionCommentChange}></TextInput>
-      <TextInput style={styles.reportInput} onChangeText={this.onPartialInspectionCommentChange}></TextInput>
-      <TextInput style={styles.reportInput} onChangeText={this.onPartialInspectionCommentChange}></TextInput>
+      <View style={styles.detailsContainer}>
+        <View style={styles.occupantDetailsContainer}>
+        <Text>L1</Text>
+        <TextInput style={styles.voltageInput} onChangeText={this.onPartialInspectionCommentChange}></TextInput>
+        <Text>L2</Text>
+        <TextInput style={styles.voltageInput} onChangeText={this.onPartialInspectionCommentChange}></TextInput>
+        <Text>L3</Text>
+        <TextInput style={styles.voltageInput} onChangeText={this.onPartialInspectionCommentChange}></TextInput>
+        </View>
+      <View style={styles.occupantDetailsContainer}>
+        <Text>L1-L2</Text>
+        <TextInput style={styles.voltageInput} onChangeText={this.onPartialInspectionCommentChange}></TextInput>
+        <Text>L2-L3</Text>
+        <TextInput style={styles.voltageInput} onChangeText={this.onPartialInspectionCommentChange}></TextInput>
+        <Text>L3-L1</Text>
+        <TextInput style={styles.voltageInput} onChangeText={this.onPartialInspectionCommentChange}></TextInput>
+      </View>
       </View>
     );
 
@@ -403,6 +424,239 @@ onpress = () => {
           </Picker>
           {this.state.installationVoltage === 'three' ? threePhaseVoltage : singlePhaseVoltage}
 
+        </View>
+
+
+        <View style={styles.detailsContainer}>
+          <Text>
+          <Text>Max Prospective S/C Current   </Text>
+          <TextInput 
+            // style={styles.occupantDetailsContainer}
+            style={styles.current}
+            textAlign="center"
+            keyboardType="numeric"></TextInput>
+          <Text>v   A</Text>
+          </Text>
+        </View>
+
+
+        <View style={styles.deviceType}>
+          <Text>Installation Voltage</Text>
+          <Picker
+          selectedValue={this.state.deviceType}
+          onValueChange={
+          (itemValue) =>
+          this.setState({deviceType: itemValue})}>
+            <Picker.Item label="None" value="none" />
+            <Picker.Item label="Switch Fuse" value="switch-fuse" />
+            <Picker.Item label="MCB" value="mcb" />
+            <Picker.Item label="MCCB" value="mccb" />
+          </Picker>
+        </View>
+
+
+        <View style={styles.detailsContainer}>
+          <Text>
+          <Text>Nominal Rating   </Text>
+          <TextInput 
+            // style={styles.occupantDetailsContainer}
+            style={styles.current}
+            textAlign="center"
+            keyboardType="numeric"></TextInput>
+          <Text>A</Text>
+          </Text>
+        </View>
+
+        <View style={styles.detailsContainer}>
+          <Text>
+          <Text>Rated Current   </Text>
+          <TextInput 
+            // style={styles.occupantDetailsContainer}
+            style={styles.current}
+            textAlign="center"
+            keyboardType="numeric"></TextInput>
+          <Text>A</Text>
+          </Text>
+        </View>
+
+        <View style={styles.detailsContainer}>
+          <Text>
+          <Text>Tripping current I▲n   </Text>
+          <TextInput 
+            // style={styles.occupantDetailsContainer}
+            style={styles.current}
+            textAlign="center"
+            keyboardType="numeric"></TextInput>
+          <Text>mA</Text>
+          </Text>
+        </View>
+
+{/* CheckBox Section */}
+        <View style={styles.checkbox}>
+          <View style={styles.checkboxleft}>
+            <View>
+              <Text>1.</Text>
+              <CheckBox
+              value={this.state.checkbox1}
+              onValueChange={this.onCheckbox1Change.bind(this)}></CheckBox>
+              {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
+              {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
+            </View>
+            <View>
+              <Text>2.</Text>
+              <CheckBox
+              value={this.state.checkbox2}
+              onValueChange={this.onCheckbox1Change.bind(this)}></CheckBox>
+              {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
+              {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
+            </View>
+            <View>
+              <Text>3.</Text>
+              <CheckBox
+              value={this.state.checkbox3}
+              onValueChange={this.onCheckbox1Change.bind(this)}></CheckBox>
+              {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
+              {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
+            </View>
+            <View>
+              <Text>4.</Text>
+              <CheckBox
+              value={this.state.checkbox4}
+              onValueChange={this.onCheckbox1Change.bind(this)}></CheckBox>
+              {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
+              {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
+            </View>
+            <View>
+              <Text>5.</Text>
+              <CheckBox
+              value={this.state.checkbox5}
+              onValueChange={this.onCheckbox1Change.bind(this)}></CheckBox>
+              {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
+              {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
+            </View>
+            <View>
+              <Text>6.</Text>
+              <CheckBox
+              value={this.state.checkbox6}
+              onValueChange={this.onCheckbox1Change.bind(this)}></CheckBox>
+              {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
+              {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
+            </View>
+            <View>
+              <Text>7.</Text>
+              <CheckBox
+              value={this.state.checkbox7}
+              onValueChange={this.onCheckbox1Change.bind(this)}></CheckBox>
+              {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
+              {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
+            </View>
+            <View>
+              <Text>8.</Text>
+              <CheckBox
+              value={this.state.checkbox8}
+              onValueChange={this.onCheckbox1Change.bind(this)}></CheckBox>
+              {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
+              {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
+            </View>
+            <View>
+              <Text>9.</Text>
+              <CheckBox
+              value={this.state.checkbox9}
+              onValueChange={this.onCheckbox1Change.bind(this)}></CheckBox>
+              {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
+              {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
+            </View>
+            <View>
+              <Text>10.</Text>
+              <CheckBox
+              value={this.state.checkbox10}
+              onValueChange={this.onCheckbox1Change.bind(this)}></CheckBox>
+              {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
+              {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
+            </View>
+          </View>
+          <View style={styles.checkboxright}>
+            <View>
+              <Text>11.</Text>
+              <CheckBox
+              value={this.state.checkbox11}
+              onValueChange={this.onCheckbox1Change.bind(this)}></CheckBox>
+              {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
+              {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
+            </View>
+            <View>
+              <Text>12.</Text>
+              <CheckBox
+              value={this.state.checkbox12}
+              onValueChange={this.onCheckbox1Change.bind(this)}></CheckBox>
+              {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
+              {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
+            </View>
+            <View>
+              <Text>13.</Text>
+              <CheckBox
+              value={this.state.checkbox13}
+              onValueChange={this.onCheckbox1Change.bind(this)}></CheckBox>
+              {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
+              {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
+            </View>
+            <View>
+              <Text>14.</Text>
+              <CheckBox
+              value={this.state.checkbox14}
+              onValueChange={this.onCheckbox1Change.bind(this)}></CheckBox>
+              {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
+              {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
+            </View>
+            <View>
+              <Text>15.</Text>
+              <CheckBox
+              value={this.state.checkbox15}
+              onValueChange={this.onCheckbox1Change.bind(this)}></CheckBox>
+              {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
+              {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
+            </View>
+            <View>
+              <Text>16.</Text>
+              <CheckBox
+              value={this.state.checkbox16}
+              onValueChange={this.onCheckbox1Change.bind(this)}></CheckBox>
+              {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
+              {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
+            </View>
+            <View>
+              <Text>17.</Text>
+              <CheckBox
+              value={this.state.checkbox17}
+              onValueChange={this.onCheckbox1Change.bind(this)}></CheckBox>
+              {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
+              {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
+            </View>
+            <View>
+              <Text>18.</Text>
+              <CheckBox
+              value={this.state.checkbox18}
+              onValueChange={this.onCheckbox1Change.bind(this)}></CheckBox>
+              {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
+              {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
+            </View>
+            <View>
+              <Text>19.</Text>
+              <CheckBox
+              value={this.state.checkbox19}
+              onValueChange={this.onCheckbox1Change.bind(this)}></CheckBox>
+              {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
+              {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
+            </View>
+            <View>
+              <Text>20.</Text>
+              <CheckBox
+              value={this.state.checkbox20}
+              onValueChange={this.onCheckbox1Change.bind(this)}></CheckBox>
+              {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
+              {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
+            </View>
+          </View>
         </View>
 
 {/* BOTTTOM BUTTONS */}

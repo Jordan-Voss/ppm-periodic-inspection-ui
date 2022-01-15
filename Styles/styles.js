@@ -114,6 +114,9 @@ export const styles = StyleSheet.create({
     borderRadius: 100,
     backgroundColor: 'white',
   },
+  installationVoltage: {
+
+  },
 
   // Report Editing
   prnumber: {
@@ -124,6 +127,20 @@ export const styles = StyleSheet.create({
 
   reportName: {
     flex: 1
+  },
+  checkboxright: {
+    flex: 1,
+    justifyContent: 'space-evenly',
+  },
+  checkboxleft: {
+    flex: 1,
+    justifyContent: 'space-evenly',
+  },
+  checkbox: {
+    marginTop: "20%",
+    flex: 1,
+    flexDirection: 'row',
+    margin: "20%"
   },
   contractornamelabel: {
     // marginLeft:"10%",
@@ -163,6 +180,27 @@ export const styles = StyleSheet.create({
     borderRadius: 4,
     elevation: 3,
     backgroundColor: 'black',
+  },
+
+  current:{
+    alignItems: 'center',
+    borderBottomColor: 'black',
+    borderBottomWidth: '1px'
+  },
+
+  voltageInput: {
+    flex: 1,
+    borderWidth:"1px",
+
+    flexDirection: 'row',
+    // backgroundColor: "dodgerblue",
+    // color: "white",
+    // padding: "1rem",
+    // height: "4rem",
+    // maxWidth: "1200px",
+    // margin: "0 auto",
+    // display: "grid",
+    // gridGap: "1rem",
   },
 
 
