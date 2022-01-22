@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, Component, useEffect } from 'react';
 import { CheckBox, Button, TextInput, Text, Image, TouchableOpacity, View } from 'react-native'
 import { logout, saveReport } from '../Services/auth_service';
 import {Picker} from '@react-native-picker/picker';
@@ -7,6 +7,10 @@ import { styles } from '../Styles/styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
 import { options } from '../Components/PickerOptions';
+import TableDemo from '../Components/DynamicTable';
+import { Tab } from '@material-ui/core';
+import DynamicTable from '../Components/DynamicTable';
+import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component-2';
 
 const initialState = {
   reportName: '',
@@ -28,14 +32,101 @@ const initialState = {
   reasonValue:"",
   partialInspectionComment:"",
   deviceType: "",
+  checkbox1: "",
+  tbl: [],
+  message: "",
+  dt1:"",
+  dt2:"",
+  dt3:"",
+  tableHead: ['Circuit Description', 'Tripping Current', 'Longest Tripping Time'],
+  tableData: [],
 };
 
 export default class NewReport extends React.Component {
   state = initialState;
+  constructor(props) {
+    super(props);
+  };
+
+  UNSAFE_componentWillMount(){
+    console.log("erhgert")
+    this.setState({tableData:[
+      ['1', '2', '3'],
+      ['a', 'b', 'c'],
+      ['1', '2', '3'],
+      ['a', 'b', 'c'],
+      ['1', '2', '3'],
+      [<TextInput
+        placeholder="Occupant Address"
+        placeholderTextColor="grey"
+        value={this.state.dt1}
+        maxLength={256}
+        color="#cd077d"
+        onChangeText={this.ondt1Change}>
+        </TextInput>, 
+        <TextInput       
+        placeholder="Occupant Address"
+        placeholderTextColor="grey"
+        value={this.state.dt2}
+        maxLength={256}
+        color="#cd077d"
+        onChangeText={this.ondt2Change}>
+        </TextInput>, 
+        <TextInput       
+        placeholder="Occupant Address"
+        placeholderTextColor="grey"
+        value={this.state.dt3}
+        maxLength={256}
+        color="#cd077d"
+        onChangeText={this.ondt3Change}>
+        </TextInput>]
+    ]});
+}
+
   logouts = () => {
     logout();
     this.props.navigation.navigate('Login');
+  }
+  // constructor(props) {
+  //   super(props);
+  //   console.log("Setting Table Data")
+  //   this.setInitialTableData.bind(this);
+  // }
 
+  setInitialTableData () {
+    console.log("Setting Initial Table Data")
+    this.setState({tableData:[
+      ['1', '2', '3'],
+      ['a', 'b', 'c'],
+      ['1', '2', '3'],
+      ['a', 'b', 'c'],
+      ['1', '2', '3'],
+      [<TextInput
+        placeholder="Occupant Address"
+        placeholderTextColor="grey"
+        value={this.state.dt1}
+        maxLength={256}
+        color="#cd077d"
+        onChangeText={this.ondt1Change}>
+        </TextInput>, 
+        <TextInput       
+        placeholder="Occupant Address"
+        placeholderTextColor="grey"
+        value={this.state.dt2}
+        maxLength={256}
+        color="#cd077d"
+        onChangeText={this.ondt2Change}>
+        </TextInput>, 
+        <TextInput       
+        placeholder="Occupant Address"
+        placeholderTextColor="grey"
+        value={this.state.dt3}
+        maxLength={256}
+        color="#cd077d"
+        onChangeText={this.ondt3Change}>
+        </TextInput>]
+    ]});
+    console.log("ERHER")
   }
 
   handleSaveReport = async () => {
@@ -56,6 +147,7 @@ export default class NewReport extends React.Component {
     partialInspectionComment,
     deviceType,
     earthingType,
+    checkbox1,
     installationVoltage
   } = this.state;
     console.log(prNumber,
@@ -73,6 +165,7 @@ export default class NewReport extends React.Component {
       partialInspectionComment,
       earthingType,
       deviceType,
+      checkbox1,
       installationVoltage);
     const respon = await saveReport(reportName, prNumber,
       contractorName, contractorAddress,
@@ -89,6 +182,7 @@ export default class NewReport extends React.Component {
       partialInspectionComment,
       earthingType,
       deviceType,
+      checkbox1,
       installationVoltage);
     // const msg = respon;
     console.log(respon);
@@ -96,7 +190,9 @@ export default class NewReport extends React.Component {
 };
 
 onpress = () => {
-  console.log(this.state)
+  // console.log(JSON.stringify(this))
+  console.log("THIS " + this.props.items)
+  console.log("THIS " + this.props.message)
 }
 
 
@@ -106,6 +202,16 @@ onpress = () => {
 
   onPrNumberChange = prNumber => {
     this.setState({ prNumber });
+};
+
+ondt1Change = dt1 => {
+  this.setState({dt1});
+};
+ondt2Change = dt2 => {
+  this.setState({dt2});
+};
+ondt3Change = dt3 => {
+  this.setState({dt3});
 };
 
   onContractorNameChange = contractorName => {
@@ -167,6 +273,13 @@ onpress = () => {
   onDeviceTypeChange = deviceType => {
     this.setState({deviceType});
   }
+  onCheckbox1Change = checkbox1 => {
+    this.setState({checkbox1})
+  }
+
+  onChange = ({key, value}) => { 
+    this.setState({key, value});
+}
 
   handleLogout = async () => {
     await logout();
@@ -648,16 +761,19 @@ onpress = () => {
               {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
               {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
             </View>
-            <View>
-              <Text>20.</Text>
-              <CheckBox
-              value={this.state.checkbox20}
-              onValueChange={this.onCheckbox1Change.bind(this)}></CheckBox>
-              {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
-              {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
             </View>
           </View>
-        </View>
+          <View>
+              <Text>20.</Text>
+              <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
+          <Row data={this.state.tableHead} style={styles.head} textStyle={styles.text}/>
+          <Rows data={this.state.tableData} textStyle={styles.text}/>
+        </Table>
+              {/* <Text>{this}</Text> */}
+              {/* console.log(this) */}
+             {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
+              {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
+            </View>
 
 {/* BOTTTOM BUTTONS */}
 

@@ -132,6 +132,10 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-evenly',
   },
+  table: {
+    flex: 1,
+    marginBottom: 30
+  },
   checkboxleft: {
     flex: 1,
     justifyContent: 'space-evenly',
