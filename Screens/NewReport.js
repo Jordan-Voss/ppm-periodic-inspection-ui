@@ -762,7 +762,7 @@ ondt3Change = dt3 => {
               {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
             </View>
             </View>
-          </View>
+            </View>
           <View>
               <Text>20.</Text>
               <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
@@ -774,6 +774,210 @@ ondt3Change = dt3 => {
              {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
               {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
             </View>
+            <View style={styles.checkbox}>
+
+            <View style={styles.checkboxleft}>
+            <View>
+              <Text>21.</Text>
+              <CheckBox
+              value={this.state.checkbox21}
+              onValueChange={this.onCheckbox1Change.bind(this)}></CheckBox>
+              {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
+              {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
+            </View>
+            <View>
+              <Text>22.</Text>
+              <CheckBox
+              value={this.state.checkbox22}
+              onValueChange={this.onCheckbox1Change.bind(this)}></CheckBox>
+              {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
+              {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
+            </View>
+            <View>
+              <Text>23.</Text>
+              <CheckBox
+              value={this.state.checkbox23}
+              onValueChange={this.onCheckbox1Change.bind(this)}></CheckBox>
+              {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
+              {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
+            </View>
+            <View>
+              <Text>24.</Text>
+              <CheckBox
+              value={this.state.checkbox24}
+              onValueChange={this.onCheckbox1Change.bind(this)}></CheckBox>
+              {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
+              {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
+            </View>
+            <View>
+              <Text>25.</Text>
+              <CheckBox
+              value={this.state.checkbox25}
+              onValueChange={this.onCheckbox1Change.bind(this)}></CheckBox>
+              {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
+              {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
+            </View>
+            </View>
+            <View style={styles.checkboxright}>
+            <View>
+              <Text>26.</Text>
+              <CheckBox
+              value={this.state.checkbox26}
+              onValueChange={this.onCheckbox1Change.bind(this)}></CheckBox>
+              {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
+              {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
+            </View>
+            <View>
+              <Text>27.</Text>
+              <CheckBox
+              value={this.state.checkbox27}
+              onValueChange={this.onCheckbox1Change.bind(this)}></CheckBox>
+              {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
+              {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
+            </View>
+            <View>
+              <Text>28.</Text>
+              <CheckBox
+              value={this.state.checkbox28}
+              onValueChange={this.onCheckbox1Change.bind(this)}></CheckBox>
+              {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
+              {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
+            </View>
+            <View>
+              <Text>29.</Text>
+              <CheckBox
+              value={this.state.checkbox29}
+              onValueChange={this.onCheckbox1Change.bind(this)}></CheckBox>
+              {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
+              {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
+            </View>
+            <View>
+              <Text>30.</Text>
+              <CheckBox
+              value={this.state.checkbox30}
+              onValueChange={this.onCheckbox1Change.bind(this)}></CheckBox>
+              {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
+              {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
+            </View>
+            </View>
+          </View>
+          <View style={styles.workmanship}>
+          <Text>Quality of Workmanship</Text>
+          <Picker
+          selectedValue={this.state.workmanship}
+          onValueChange={
+          (itemValue) =>
+          this.setState({workmanship: itemValue})}>
+            <Picker.Item label="Very Good" value="vg" />
+            <Picker.Item label="Satisfactory" value="satisfactory" />
+            <Picker.Item label="Poor" value="poor" />
+          </Picker>
+        </View>
+
+        <View style={styles.minresistancecontainer}>
+          <Text>Summary Test Data</Text>
+          <Text>
+          <Text>Min Insulation Resistance</Text>
+          <TextInput 
+            // style={styles.occupantDetailsContainer}
+            style={styles.current}
+            textAlign="center"
+            keyboardType="numeric"></TextInput>
+          <Text>MΩ</Text>
+          </Text>
+        </View>
+        <View style={styles.maxresistancecontainer}>
+          <Text>
+          <Text>Max Resistance of protective conductor</Text>
+          <TextInput 
+            // style={styles.occupantDetailsContainer}
+            style={styles.current}
+            textAlign="center"
+            keyboardType="numeric"></TextInput>
+          <Text>Ω</Text>
+          </Text>
+        </View>
+        <View style={styles.faxfaultloopcontainer}>
+          <Text>
+          <Text>Max fault loop impedance</Text>
+          <TextInput 
+            // style={styles.occupantDetailsContainer}
+            style={styles.current}
+            textAlign="center"
+            keyboardType="numeric"></TextInput>
+          <Text>Ω and type and size of associated protective device   </Text>
+          <Text>Type</Text>
+          <TextInput             // style={styles.occupantDetailsContainer}
+            style={styles.current}
+            textAlign="center"
+            keyboardType="numeric"></TextInput>
+          <Text>Size</Text>
+          <TextInput             // style={styles.occupantDetailsContainer}
+            style={styles.current}
+            textAlign="center"
+            keyboardType="numeric"></TextInput>
+          </Text>
+        </View>
+
+
+        <Text>Test Instrument Serial Numbers</Text>
+        <View style={styles.minresistancecontainer}>
+          <Text>
+          <Text>Continuity Tester</Text>
+
+          <Picker
+          selectedValue={this.state.workmanship}
+          onValueChange={
+          (itemValue) =>
+          this.setState({workmanship: itemValue})}>
+            <Picker.Item label="Very Good" value="vg" />
+            <Picker.Item label="Satisfactory" value="satisfactory" />
+            <Picker.Item label="Poor" value="poor" />
+          </Picker>
+          </Text>
+        </View>
+        <View style={styles.maxresistancecontainer}>
+          <Text>
+          <Text>Insulation Resistance Tester</Text>
+          <Picker
+          selectedValue={this.state.workmanship}
+          onValueChange={
+          (itemValue) =>
+          this.setState({workmanship: itemValue})}>
+            <Picker.Item label="Very Good" value="vg" />
+            <Picker.Item label="Satisfactory" value="satisfactory" />
+            <Picker.Item label="Poor" value="poor" />
+          </Picker>
+          </Text>
+        </View>
+        <View style={styles.faxfaultloopcontainer}>
+          <Text>
+          <Text>Loop Impedance Tester</Text>
+          <Picker
+          selectedValue={this.state.workmanship}
+          onValueChange={
+          (itemValue) =>
+          this.setState({workmanship: itemValue})}>
+            <Picker.Item label="Very Good" value="vg" />
+            <Picker.Item label="Satisfactory" value="satisfactory" />
+            <Picker.Item label="Poor" value="poor" />
+          </Picker>
+          </Text>
+        </View>
+        <View style={styles.faxfaultloopcontainer}>
+          <Text>
+          <Text>RCD Tester</Text>
+          <Picker
+          selectedValue={this.state.workmanship}
+          onValueChange={
+          (itemValue) =>
+          this.setState({workmanship: itemValue})}>
+            <Picker.Item label="Very Good" value="vg" />
+            <Picker.Item label="Satisfactory" value="satisfactory" />
+            <Picker.Item label="Poor" value="poor" />
+          </Picker>
+          </Text>
+        </View>
 
 {/* BOTTTOM BUTTONS */}
 
