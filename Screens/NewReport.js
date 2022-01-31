@@ -58,7 +58,7 @@ export default class NewReport extends React.Component {
     console.log("erhgert")
     this.setState({tableData:[
       [<TextInput
-        placeholder="Occupant Address"
+        placeholder="Circuit Description"
         placeholderTextColor="grey"
         value={this.state.dt1}
         maxLength={256}
@@ -66,7 +66,7 @@ export default class NewReport extends React.Component {
         onChangeText={this.ondt1Change}>
         </TextInput>, 
         <TextInput       
-        placeholder="Occupant Address"
+        placeholder="Tripping Current"
         placeholderTextColor="grey"
         value={this.state.dt2}
         maxLength={256}
@@ -74,7 +74,7 @@ export default class NewReport extends React.Component {
         onChangeText={this.ondt2Change}>
         </TextInput>, 
         <TextInput       
-        placeholder="Occupant Address"
+        placeholder="Longest Tripping Time"
         placeholderTextColor="grey"
         value={this.state.dt3}
         maxLength={256}
@@ -84,7 +84,7 @@ export default class NewReport extends React.Component {
     ]});
     this.setState({table2Data:[
       [<TextInput
-        placeholder="Occupant Address"
+        placeholder="Reference Number"
         placeholderTextColor="grey"
         value={this.state.d2t1}
         maxLength={256}
@@ -92,7 +92,7 @@ export default class NewReport extends React.Component {
         onChangeText={this.ond2t1Change}>
         </TextInput>, 
         <TextInput       
-        placeholder="Occupant Address"
+        placeholder="Comments"
         placeholderTextColor="grey"
         value={this.state.d2t2}
         maxLength={256}
@@ -100,7 +100,7 @@ export default class NewReport extends React.Component {
         onChangeText={this.ond2t2Change}>
         </TextInput>, 
         <TextInput       
-        placeholder="Occupant Address"
+        placeholder="Reccomendations"
         placeholderTextColor="grey"
         value={this.state.d2t3}
         maxLength={256}
