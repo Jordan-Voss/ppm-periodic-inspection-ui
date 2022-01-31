@@ -38,8 +38,14 @@ const initialState = {
   dt1:"",
   dt2:"",
   dt3:"",
+  d2t1:"",
+  d2t2:"",
+  d2t3:"",
+  workrequired:"",
   tableHead: ['Circuit Description', 'Tripping Current', 'Longest Tripping Time'],
   tableData: [],
+  table2Head: ['Ref No.', 'Comments', 'Reccomendations'],
+  table2Data: [],
 };
 
 export default class NewReport extends React.Component {
@@ -51,11 +57,6 @@ export default class NewReport extends React.Component {
   UNSAFE_componentWillMount(){
     console.log("erhgert")
     this.setState({tableData:[
-      ['1', '2', '3'],
-      ['a', 'b', 'c'],
-      ['1', '2', '3'],
-      ['a', 'b', 'c'],
-      ['1', '2', '3'],
       [<TextInput
         placeholder="Occupant Address"
         placeholderTextColor="grey"
@@ -79,6 +80,32 @@ export default class NewReport extends React.Component {
         maxLength={256}
         color="#cd077d"
         onChangeText={this.ondt3Change}>
+        </TextInput>]
+    ]});
+    this.setState({table2Data:[
+      [<TextInput
+        placeholder="Occupant Address"
+        placeholderTextColor="grey"
+        value={this.state.d2t1}
+        maxLength={256}
+        color="#cd077d"
+        onChangeText={this.ond2t1Change}>
+        </TextInput>, 
+        <TextInput       
+        placeholder="Occupant Address"
+        placeholderTextColor="grey"
+        value={this.state.d2t2}
+        maxLength={256}
+        color="#cd077d"
+        onChangeText={this.ond2t2Change}>
+        </TextInput>, 
+        <TextInput       
+        placeholder="Occupant Address"
+        placeholderTextColor="grey"
+        value={this.state.d2t3}
+        maxLength={256}
+        color="#cd077d"
+        onChangeText={this.ond2t3Change}>
         </TextInput>]
     ]});
 }
@@ -93,41 +120,6 @@ export default class NewReport extends React.Component {
   //   this.setInitialTableData.bind(this);
   // }
 
-  setInitialTableData () {
-    console.log("Setting Initial Table Data")
-    this.setState({tableData:[
-      ['1', '2', '3'],
-      ['a', 'b', 'c'],
-      ['1', '2', '3'],
-      ['a', 'b', 'c'],
-      ['1', '2', '3'],
-      [<TextInput
-        placeholder="Occupant Address"
-        placeholderTextColor="grey"
-        value={this.state.dt1}
-        maxLength={256}
-        color="#cd077d"
-        onChangeText={this.ondt1Change}>
-        </TextInput>, 
-        <TextInput       
-        placeholder="Occupant Address"
-        placeholderTextColor="grey"
-        value={this.state.dt2}
-        maxLength={256}
-        color="#cd077d"
-        onChangeText={this.ondt2Change}>
-        </TextInput>, 
-        <TextInput       
-        placeholder="Occupant Address"
-        placeholderTextColor="grey"
-        value={this.state.dt3}
-        maxLength={256}
-        color="#cd077d"
-        onChangeText={this.ondt3Change}>
-        </TextInput>]
-    ]});
-    console.log("ERHER")
-  }
 
   handleSaveReport = async () => {
     const {
@@ -214,6 +206,22 @@ ondt3Change = dt3 => {
   this.setState({dt3});
 };
 
+ond2t1Change = d2t1 => {
+  this.setState({d2t1});
+};
+ond2t2Change = d2t2 => {
+  this.setState({d2t2});
+};
+ond2t3Change = d2t3 => {
+  this.setState({d2t3});
+};
+
+onTableChange = () => {
+this.ondt1Change;
+this.ondt2Change;
+this.ondt3Change;
+}
+
   onContractorNameChange = contractorName => {
     this.setState({ contractorName });
   };
@@ -221,6 +229,11 @@ ondt3Change = dt3 => {
   onContractorAddressChange = contractorAddress => {
     this.setState({ contractorAddress });
   };
+
+  onAddTableRow = tableData => {
+    const array = [this.state.dt1, this.state.dt2, this.state.dt3]
+    this.setState({tableData:[array, ...tableData]})
+  }
 
   onContractorRegNumberChange = contractorRegNumber => {
     this.setState({ contractorRegNumber });
@@ -266,6 +279,10 @@ ondt3Change = dt3 => {
     this.setState({ partialInspectionComment});
   }
 
+  setWorkRequired = workrequired => {
+    this.setState({workrequired})
+  }
+
   setInstallationVoltage = installationVoltage => {
     this.setState({ installationVoltage });
   };
@@ -296,6 +313,13 @@ ondt3Change = dt3 => {
       <View>
       <TextInput style={styles.reportInput} onChangeText={this.onInstallationCategoryCommentChange}></TextInput>
       </View>
+    );
+
+    const table = (
+      <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
+      <Row data={this.state.table2Head} style={styles.head} textStyle={styles.text}/>
+      <Rows data={this.state.table2Data} textStyle={styles.text}/>
+    </Table>
     );
 
     const partialInspectionComment = (
@@ -767,8 +791,9 @@ ondt3Change = dt3 => {
               <Text>20.</Text>
               <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
           <Row data={this.state.tableHead} style={styles.head} textStyle={styles.text}/>
-          <Rows data={this.state.tableData} textStyle={styles.text}/>
+          <Rows data={this.state.tableData} textStyle={styles.text} onChangeText={this.onTableChange}/>
         </Table>
+        <Button onpress={this.onAddTableRow}>Add</Button>
               {/* <Text>{this}</Text> */}
               {/* console.log(this) */}
              {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
@@ -964,7 +989,7 @@ ondt3Change = dt3 => {
           </Picker>
           </Text>
         </View>
-        <View style={styles.faxfaultloopcontainer}>
+        <View style={styles.maxfaultloopcontainer}>
           <Text>
           <Text>RCD Tester</Text>
           <Picker
@@ -978,6 +1003,43 @@ ondt3Change = dt3 => {
           </Picker>
           </Text>
         </View>
+
+        <View style={styles.declaration}>
+          <Text>
+          <Text>declaration etc. </Text>
+          <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vulputate eros vitae sapien sagittis dictum. Duis in ligula eros. Phasellus vitae hendrerit risus, id malesuada neque. Nulla faucibus dui non est scelerisque, vel suscipit nibh mattis. Vivamus tristique convallis justo eu mollis. Nunc nunc libero, vestibulum non arcu eu, iaculis facilisis lectus. Praesent suscipit at mauris at sollicitudin. Sed vel rutrum ipsum, eu consectetur nunc. Cras at urna eget neque euismod consequat. Donec viverra pharetra molestie. Curabitur feugiat dictum ex, quis hendrerit lacus porta id. Proin rhoncus a lacus id hendrerit.</Text>
+          <Picker
+          selectedValue={this.state.declaration}
+          onValueChange={
+          (itemValue) =>
+          this.setState({workmanship: itemValue})}>
+            <Picker.Item label="Adrian" value="a" />
+            <Picker.Item label="Eddie" value="e" />
+          </Picker>
+          </Text>
+        </View>
+
+        <View style={styles.workrequired}>
+          <Text>
+          <Text>declaration etc. </Text>
+          <Picker
+          selectedValue={this.state.workrequired}
+          onValueChange={
+          (itemValue) =>
+          this.setState({workrequired: itemValue})}>
+            <Picker.Item label="No Remedial Work Is Required" value="no-work" />
+            <Picker.Item label="The Following Observations Are Made" value="observations" />
+          </Picker>
+          </Text>
+        </View>
+
+        <View>
+          {this.state.workrequired == "observations" ? table : null}
+              {/* <Text>{this}</Text> */}
+              {/* console.log(this) */}
+             {/* {this.state.isFullExtent ? <Text>YES</Text> : <Text>NO</Text>} */}
+              {/* {!this.state.isFullExtent ? partialInspectionComment : null} */}
+            </View>
 
 {/* BOTTTOM BUTTONS */}
 
